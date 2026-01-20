@@ -1,8 +1,8 @@
-name: WormGPT_Run
+name: WormGPT_Final_Run
 on:
   push:
-    branches: [ master ]
-  workflow_dispatch:
+    branches: [ master ]  # SIZDA MASTER BO'LGANI UCHUN SHU KERAK
+  workflow_dispatch:      # QO'LDA YOQISH TUGMASI
 
 jobs:
   run-bot:
@@ -17,4 +17,3 @@ jobs:
         run: pip install pyTelegramBotAPI requests
       - name: Start Bot
         run: python main.py
-        
