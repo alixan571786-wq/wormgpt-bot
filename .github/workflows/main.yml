@@ -1,0 +1,28 @@
+name: WormGPT_Continuous_Run
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 */6 * * *' # Har 6 soatda o'zini yangilab turadi
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          pip install pyTelegramBotAPI requests
+
+      - name: Run WormGPT
+        run: python main.py
+        env:
+          PYTHONUNBUFFERED: 1
+          
