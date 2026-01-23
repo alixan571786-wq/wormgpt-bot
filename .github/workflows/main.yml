@@ -1,19 +1,35 @@
 name: WormGPT_Final_Run
+
 on:
   push:
-    branches: [ master ]  # SIZDA MASTER BO'LGANI UCHUN SHU KERAK
-  workflow_dispatch:      # QO'LDA YOQISH TUGMASI
+    branches: [ master, main ] # Har ikkala branch uchun ham ishlayveradi
+  workflow_dispatch:          # Qo'lda yoqish imkoniyati
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+    
+    # Bot o'chib qolmasligi uchun maksimal vaqtni belgilaymiz (masalan, 6 soat)
+    timeout-minutes: 360 
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
+      - name: Kodni yuklab olish
+        uses: actions/checkout@v2
+
+      - name: Pythonni sozlash
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-      - name: Install Dependencies
-        run: pip install pyTelegramBotAPI requests
-      - name: Start Bot
+
+      - name: Kutubxonalarni o'rnatish
+        run: |
+          pip install pyTelegramBotAPI requests
+          # Agar qo'shimcha kutubxonalar bo'lsa, shu yerga yoziladi
+
+      - name: Botni ishga tushirish
+        # BotFather'dan olgan tokenni GitHub Secrets'ga qo'shgan bo'lsang shunday qoladi
+        # Agar tokenni to'g'ridan-to'g'ri main.py ichiga yozgan bo'lsang, env qismi shart emas
+        env:
+          PYTHONUNBUFFERED: 1
         run: python main.py
+        
